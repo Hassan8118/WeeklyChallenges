@@ -67,36 +67,50 @@ namespace ChallengesWithTestsMark8
 
         public int MaxConsecutiveCount(int[] numbers)
         {
-            if (numbers == null || !numbers.Any()) return 0;
-            Dictionary<int, int> count = new Dictionary<int, int>();
-            for(int i=0;i<numbers.Length-1; i++)
-            {
-                if (!count.ContainsKey(numbers[i]))
-                {
-                    count.Add(numbers[i], i);
-                }
-                int j = i+1;
-                while (j < numbers.Length && numbers[j] == numbers[i])
-                {
-                    count[numbers[i]] = count[numbers[i]] + 1;
-                    j++;
-                }
-            }
-            int max = 0;
-            for (int i = 0; i < count.Count(); i++)
-            {
+            int count = 0;
 
-                if (count.ElementAt(i).Value>max)
+            for (int i = 0; i < numbers.Length;i++)
+            {
+                int currentCount = 1;
+
+                for (int j = i + 1; j < numbers.Length;j++)
                 {
-                    max = count.ElementAt(i).Value;
+                    if (numbers[i] == numbers[j])
+                    { 
+                        currentCount++; 
+                    }
+                    else 
+                    { 
+                        break; 
+                    } 
+                   
                 }
+                if (currentCount > count)
+                {
+                    count = currentCount;
+                }
+                
             }
-            return max;
+            return count;
         }
 
         public double[] GetEveryNthElement(List<double> elements, int n)
         {
-            throw new NotImplementedException();
+            List<double> newList = new List<double>();
+            if (elements == null || n == 0 || n < 0 || n > elements.Count)
+            {
+                return newList.ToArray();
+            }
+
+            for (int i = 0; i < elements.Count; i++) 
+            {  
+                if (elements[i] % n == 0)
+                {
+                    newList.Add(elements[i]);   
+                }
+            
+            }
+            return newList.ToArray();
         }
     }
 }
